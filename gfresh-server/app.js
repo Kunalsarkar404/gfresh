@@ -10,7 +10,8 @@ const database = 'mongodb+srv://vjkunal00:Bubunsarkar123@cluster0.fv14d.mongodb.
 app.use(cors())
 app.use(bodyParser.json());
 app.use(express.json());
-require('./Models/usertable.js')
+require('./Models/usertable.js');
+require('./Models/category.js');
 connectdb(database)
 app.use("/api/user", userrouter);
 
