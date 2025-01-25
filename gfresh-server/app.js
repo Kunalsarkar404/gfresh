@@ -6,6 +6,7 @@ const cors = require("cors");
 const connectdb = require("./db/connection.js");
 const categoryrouter = require("./routes/categoryRouter.js");
 const productRouter = require('./routes/productRouter.js');
+const variantRouter = require('./routes/variantRouter.js');
 
 
 const app = express();
@@ -17,11 +18,13 @@ app.use(bodyParser.json());
 app.use(express.json());
 require('./Models/usertable.js');
 require('./Models/category.js');
-require('./Models/product.js')
+require('./Models/product.js');
+require('./Models/product_variant.js');
 connectdb(database)
 app.use("/api/user", userrouter);
 app.use("/api/category", categoryrouter);
 app.use("/api/product", productRouter)
+app.use("/api/variant", variantRouter)
 
 
 app.listen(port, () => {
