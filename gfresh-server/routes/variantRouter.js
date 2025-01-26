@@ -6,6 +6,8 @@ const updateProductVariant = require("../controllers/ProductVariant/updateProduc
 const productVariantList = require("../controllers/ProductVariant/productVariantList.js");
 const getSingleProductVariant = require("../controllers/ProductVariant/singleProductVariant.js");
 const deleteProductVariant = require("../controllers/ProductVariant/deleteProductVariant.js");
+const frontendSingleProduct = require("../controllers/ProductVariant/frontend/frontendSingleProduct.js");
+const frontendSingleProductVariant = require("../controllers/ProductVariant/frontend/frontend_singleProductVariant.js");
 
 variantRouter.post(
   "/",
@@ -27,6 +29,9 @@ variantRouter.patch(
   ]),
   updateProductVariant
 );
+
+variantRouter.get('/detail/:id',frontendSingleProduct)
+variantRouter.get('/:parentid/:attr/:attrvalue',frontendSingleProductVariant)
 variantRouter.get("/id/:id", productVariantList);
 variantRouter.get("/:id", getSingleProductVariant);
 variantRouter.delete("/:id", deleteProductVariant);

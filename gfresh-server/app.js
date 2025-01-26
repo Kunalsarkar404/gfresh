@@ -7,6 +7,8 @@ const connectdb = require("./db/connection.js");
 const categoryrouter = require("./routes/categoryRouter.js");
 const productRouter = require('./routes/productRouter.js');
 const variantRouter = require('./routes/variantRouter.js');
+const router = require('./routes/wishlistRouter.js');
+const wishlistRouter = require('./routes/wishlistRouter.js');
 
 
 const app = express();
@@ -25,7 +27,7 @@ app.use("/api/user", userrouter);
 app.use("/api/category", categoryrouter);
 app.use("/api/product", productRouter)
 app.use("/api/variant", variantRouter)
-
+app.use("/api/wishlist", wishlistRouter);
 
 app.listen(port, () => {
     console.log(`server is running at ${port}`);
