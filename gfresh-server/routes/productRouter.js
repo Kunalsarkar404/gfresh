@@ -7,6 +7,7 @@ const getSingleProduct = require('../controllers/Product/singleProduct');
 const deleteProduct = require('../controllers/Product/deleteProduct');
 const searchItem = require('../controllers/Product/frontend/frontend_search');
 const frontendProductListByCategory = require('../controllers/Product/frontend/frontend_productlist_bycategory');
+const checkUser = require('../middlewares/checkUser');
 const frontend_singleProduct = require('../controllers/Product/frontend/frontend_singleproduct');
 const productRouter = express.Router()
 
@@ -27,6 +28,6 @@ productRouter.get('/search/:name', searchItem)
 productRouter.get('/product-by-category/:id', frontendProductListByCategory)
 productRouter.get('/:id', getSingleProduct)
 productRouter.delete('/:id', deleteProduct)
-//productRouter.get('/product-detail/:id', checkuser, frontend_singleProduct)
+productRouter.get('/product-detail/:id', checkUser, frontend_singleProduct)
 
 module.exports = productRouter;

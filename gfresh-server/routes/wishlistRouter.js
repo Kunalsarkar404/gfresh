@@ -8,7 +8,7 @@ const wishlistcount = require('../controllers/Wishlist/frontend/wishlistCount')
 const removeWishlist = require('../controllers/Wishlist/frontend/removeWishlist')
 const addToCartDelete = require('../controllers/Wishlist/addToCartDelete')
 const checkUser = require('../middlewares/checkUser')
-const wishlistRouter = express.wishlistRouter()
+const wishlistRouter = express.Router();
 
 wishlistRouter.post('/',authenticateToken,addTowishlist)
 wishlistRouter.get('/',wishlistList)
