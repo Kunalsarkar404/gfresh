@@ -9,6 +9,8 @@ const productRouter = require('./routes/productRouter.js');
 const variantRouter = require('./routes/variantRouter.js');
 const router = require('./routes/wishlistRouter.js');
 const wishlistRouter = require('./routes/wishlistRouter.js');
+const cartRouter = require('./routes/cartRouter.js');
+const addressRouter = require('./routes/addressRouter.js');
 
 
 const app = express();
@@ -28,6 +30,8 @@ app.use("/api/category", categoryrouter);
 app.use("/api/product", productRouter)
 app.use("/api/variant", variantRouter)
 app.use("/api/wishlist", wishlistRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/address", addressRouter);
 
 app.listen(port, () => {
     console.log(`server is running at ${port}`);
