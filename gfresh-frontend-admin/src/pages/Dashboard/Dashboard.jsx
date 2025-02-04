@@ -5,6 +5,7 @@ import img3 from "../../assets/Ellipse 29.png";
 import img4 from "../../assets/Western union.png";
 import Breadcupdash from "../../components/Breadcupdash";
 import { useCountinfoQuery } from "../../store/api/webinfoapi";
+import Header from "../../components/Header";
 
 const Dashboard = () => {
   const { data, isLoading, isError } = useCountinfoQuery();
@@ -20,7 +21,10 @@ const Dashboard = () => {
 
   return (
     <div style={{ width: "100%", minHeight: "100vh" }}>
-      {/* <Header /> */}
+          <Header />
+      <div style={{ width: "100%" }}>
+          {children}
+        </div>
       <div className="dashboardcontent">
         <Breadcupdash name={"Dashboard"} />
         <div className="container-fuild py-4" style={{ paddingLeft: "0px", paddingRight: "0px" }}>

@@ -1,177 +1,180 @@
 import React, { useState } from "react";
-import img from "../assets/qwerty.png";
-import { BsFillEnvelopeFill } from "react-icons/bs";
-import {
-  FaBell,
-  FaCog,
-  FaEuroSign,
-  FaSignature,
-  FaUserAlt,
-} from "react-icons/fa";
-import {
-  getprivateurl,
-  getsoh,
-  gettoken,
-  privateurl,
-  removeToken,
-} from "../Localstorage/Store";
-import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BsFillEnvelopeFill } from "react-icons/bs";
+import { FaBell, FaCog, FaEuroSign, FaSignature, FaUserAlt } from "react-icons/fa";
 import { AiOutlineDown } from "react-icons/ai";
 
-import img2 from "../assets/Ecomus.svg";
-import axios from "axios";
-import { useContactlistlatestQuery } from "../store/api/webinfoapi";
-const Header = () => {
-  const nvg = useNavigate();
-  const userinfo = gettoken();
-  console.log("this user info", userinfo)
-  const logoutevt = async () => {
-    removeToken();
-    nvg("/");
-  };
-  const sshh = getsoh();
+// Import assets
+import logoImage from "../assets/qwerty.png";         // Used for notifications and user image
+import brandLogo from "../assets/Ecomus.svg";           // Brand logo displayed on the header
 
-  const { data: userData, isLoading } = useContactlistlatestQuery();
-  console.log("dkdkdkdkkc", userData)
+// Import utility functions from your local storage module
+import { gettoken, getsoh, removeToken } from "../Localstorage/Store";
+
+// Import RTK Query hook for fetching notifications (latest contacts)
+import { useContactlistlatestQuery } from "../store/api/webinfoapi";
+
+/* ---------------------- Subcomponents ---------------------- */
+
+// Notification Dropdown: displays a list of notifications
+const NotificationDropdown = ({ notifications, isLoading }) => {
+  return (
+    <div className="dropdown-menu notification-dropdown">
+      <div className="notification-header">
+        <h6>Notification</h6>
+      </div>
+      <hr />
+      {isLoading ? (
+        <div className="notification-loading">Loading...</div>
+      ) : notifications && notifications.data && notifications.data.length > 0 ? (
+        notifications.data.map((item, index) => (
+          <React.Fragment key={index}>
+            <div className="notification-item d-flex align-items-start">
+              <div className="notification-img">
+                <img src={logoImage} alt="Notification" />
+              </div>
+              <div className="notification-content">
+                <h6 className="notification-title">
+                  {item.firstname} {item.lastname}
+                </h6>
+                <p className="notification-text">
+                  {item.Message.length > 40
+                    ? `${item.Message.substring(0, 40)}...`
+                    : item.Message}
+                </p>
+              </div>
+            </div>
+            <hr />
+          </React.Fragment>
+        ))
+      ) : (
+        <div className="no-notifications">No notifications</div>
+      )}
+    </div>
+  );
+};
+
+// User Dropdown: displays profile information and user-related navigation
+const UserDropdown = ({ user, onLogout }) => {
+  return (
+    <div className="user-dropdown">
+      <div className="user-dropdown-header text-center">
+        <img src={logoImage} alt="User" className="user-dropdown-img" />
+        <div className="user-info">
+          <p className="user-name">{user?.first_name} {user?.last_name}</p>
+          <p className="user-email">{user?.email}</p>
+        </div>
+      </div>
+      <ul className="user-dropdown-menu">
+        <li>
+          <NavLink to="/profiledetail">
+            <FaUserAlt /> <span>View Profile</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/accountpassword">
+            <FaCog /> <span>Account Setting</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/logactivity">
+            <FaSignature /> <span>Login Activity</span>
+          </NavLink>
+        </li>
+        <li onClick={onLogout}>
+          <NavLink to="#">
+            <FaEuroSign /> <span>Log Out</span>
+          </NavLink>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+/* ---------------------- Main Header Component ---------------------- */
+
+const Header = () => {
+  const navigate = useNavigate();
+  const userToken = gettoken(); // Assume this returns an object with a 'user' property
+  const user = userToken?.user;
+  const soh = getsoh();
+
+  // Fetch notifications via RTK Query (latest 10 notifications, for example)
+  const { data: notificationsData, isLoading } = useContactlistlatestQuery();
+
+  // Local state to toggle the user dropdown visibility
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+
+  // Toggle handler for the user dropdown
+  const toggleUserDropdown = () => {
+    setIsUserDropdownOpen((prev) => !prev);
+  };
+
+  // Logout functionality: remove token and navigate to login page
+  const handleLogout = () => {
+    removeToken();
+    navigate("/");
+  };
+
+  // If user is not authenticated, render nothing (or a placeholder)
+  if (!user) return null;
 
   return (
-    userinfo ? <div
-      className="header"
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "0px",
-      }}
-    >
-      <div>
-        {sshh !== true ? (
-          <img src={img2} alt="qwerty" style={{ height: "24px", marginLeft: "4px" }} />
-        ) : (
-          ""
+    <header className="header d-flex justify-content-between align-items-center">
+      {/* Left Side: Brand Logo */}
+      <div className="header-left">
+        {!soh && (
+          <img
+            src={brandLogo}
+            alt="Brand Logo"
+            className="brand-logo"
+            style={{ height: "24px", marginLeft: "4px" }}
+          />
         )}
       </div>
-      <div style={{ display: "flex" }}>
-        <div className="icongroup">
-          <div style={{ width: "0px", height: "0px" }}>
 
-          </div>
-
-
-
-          <div className="icon white">
-            <div className="btn-group">
-              {/* <button type="button" className="btn btn-danger"></button> */}
-              <button
-                type="button"
-                className="btn dropdown-toggle-split"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <BsFillEnvelopeFill color="white" size="19px" />
-                {/* <span className="visually-hidden">Toggle Dropdown</span> */}
-              </button>
-              <ul className="dropdown-menu">
-                <div className="notification">
-                  <h6 style={{ position: 'relative', top: '10px' }}>Notification</h6>
-                  {/* <h6 className="ms-auto">Clear All</h6> */}
-                </div>{" "}
-                <hr />
-                {isLoading == false ? userData.data.map((item, index) => (
-                  <>
-                    <div className="col drop-msg d-flex align-items-start ms-3 col-12">
-                      <div className="col-3">
-                        <img src={img} alt="" />
-                      </div>
-                      <div className="col-9">
-                        <h6 className="noti-h">{item.firstname} {item.lastname}</h6>
-                        <h6 className="noti">
-                          {item.Message.length > 40 ? `${item.Message.substring(0, 40)}...` : `${item.Message.substring(0, 25)}`}
-                        </h6>
-                      </div>
-                    </div>
-                    <hr /></>)) : ''}
-
-                {/* // <div className="col drop-msg d-flex align-items-start ms-3 col-12">
-                //   <div className="col-3">
-                //     <img src={img} alt="" />
-                //   </div>
-                //   <div className="col-9">
-                //     <h6 className="noti-h">Rohit Kumar</h6>
-                //     <h6 className="noti">
-                //       Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                //     </h6>
-                //   </div>
-                // </div> */}
-                {/* <div className="">
-                  {" "}
-                  <hr />
-                  <h6 className="text-center">View All</h6>
-                </div> */}
-              </ul>
-            </div>
-          </div>
-
-          <div className="icon white">
-            <FaBell size="19px" />
-          </div>
-        </div>
-        <div className="userlogo">
-          <img src={img} alt="qwerty" />
-        </div>
-        <div className="sec-center">
-          <input
-            className="dropdown"
-            type="checkbox"
-            id="dropdown"
-            name="dropdown"
-          />
-          <label className="for-dropdown" htmlFor="dropdown">
-            {userinfo?.user?.first_name} {userinfo?.user?.last_name}
-            <AiOutlineDown />
-          </label>
-          <div className="section-dropdown">
-            <div
-              className="col sec-profile d-flex align-items-center justify-content-center mt-2 ms-1 col-12"
-              style={{ flexDirection: "column" }}
+      {/* Right Side: Notification and User Controls */}
+      <div className="header-right d-flex align-items-center">
+        {/* Notification Area */}
+        <div className="notification-group position-relative me-3">
+          <div className="dropdown">
+            <button
+              className="btn notification-button dropdown-toggle-split"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
-              <div className="col">
-                <img src={img} alt="" />
-              </div>
-              <div className="col-12 name-drop">
-                <p className="head-txt">{userinfo?.user?.first_name} {userinfo?.user?.last_name}</p>
-                <p className="head-para">{userinfo?.user?.email}</p>
-              </div>
-            </div>
-            <ul className="p-0">
-              <li>
-                <NavLink to="/profiledetail">
-                  <FaUserAlt /> <span>View Profile</span>{" "}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/accountpassword">
-                  <FaCog /> <span>Account Setting</span>{" "}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/logactivity">
-                  <FaSignature /> <span>Login Activity</span>{" "}
-                </NavLink>{" "}
-                <hr />
-              </li>
-              <li onClick={logoutevt}>
-                <NavLink to="#">
-                  {" "}
-                  <FaEuroSign /> <span>Log Out</span>{" "}
-                </NavLink>
-              </li>
-            </ul>
+              <BsFillEnvelopeFill color="white" size="19px" />
+            </button>
+            <NotificationDropdown
+              notifications={notificationsData}
+              isLoading={isLoading}
+            />
           </div>
+          <div className="notification-icon ms-2">
+            <FaBell size="19px" color="white" />
+          </div>
+        </div>
+
+        {/* User Profile Area */}
+        <div className="user-profile position-relative">
+          <img
+            src={logoImage}
+            alt="User Profile"
+            className="user-profile-img"
+            onClick={toggleUserDropdown}
+            style={{ cursor: "pointer" }}
+          />
+          <div className="user-name d-flex align-items-center ms-2" onClick={toggleUserDropdown} style={{ cursor: "pointer" }}>
+            <span>{user.first_name} {user.last_name}</span>
+            <AiOutlineDown className="ms-1" />
+          </div>
+          {isUserDropdownOpen && (
+            <UserDropdown user={user} onLogout={handleLogout} />
+          )}
         </div>
       </div>
-
-    </div> : ''
+    </header>
   );
 };
 

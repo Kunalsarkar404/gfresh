@@ -18,152 +18,187 @@ import Header from "./components/Header";
 
 const Sidebarmenu = ({ children }) => {
   const gettokinval = gettoken();
-  const nvg = useNavigate();
+  const navigate = useNavigate();
+
+  // State to manage sidebar collapse status
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Renamed state: when true, the logo is shown
+  const [showLogo, setShowLogo] = useState(true);
+
+  // Function to toggle the collapsed state
+  const collapseSidebar = () => {
+    setIsCollapsed((prevState) => !prevState);
+  };
+
+  // Function to toggle the logo display (you can adjust this logic as needed)
+  const toggleLogoDisplay = () => {
+    setShowLogo((prevState) => !prevState);
+  };
+
+  // Combined handler for the hamburger menu click
+  const handleHamburgerClick = () => {
+    collapseSidebar();
+    toggleLogoDisplay();
+  };
+
+  // Logout handler
   const logoutevt = async () => {
     removeToken();
-    nvg("/");
+    navigate("/");
   };
-  const [openSubMenu, setOpenSubMenu] = useState(null);
-  const [hideimg, setHideimg] = useState(false);
 
+  // State to track the currently open sub-menu
+  const [openSubMenu, setOpenSubMenu] = useState(null);
+
+  // Function to toggle sub-menu open/close state
   const handleSubMenuClick = (key) => {
     setOpenSubMenu(key === openSubMenu ? null : key);
   };
 
+  // Example side effect (ensure this is intended)
   useEffect(() => {
     sohstore(false);
   }, []);
 
+  // Get the current location for active link highlighting
   const location = useLocation();
-  const result = location.pathname.substring(0, location.pathname.lastIndexOf("/"));
-  const desiredString = location.pathname.split("/").slice(0, 2).join("/");
 
+  // Use this helper to check the base route (removing the last segment)
+  const result = location.pathname.substring(0, location.pathname.lastIndexOf("/"));
+
+  // If on the login or public route ("/"), do not render the sidebar
   if (location.pathname === "/") {
     return (
-      <div style={{ background: location.pathname === "/resetpassword" ? "#ffff" : "#F3F6FA" }}>
+      <div style={{ background: "#F3F6FA" }}>
         {children}
       </div>
     );
   } else {
     return (
       <div style={{ display: "flex", width: "100%" }}>
-        <Sidebar className="sidebarcum" defaultCollapsed="close">
+        <Sidebar collapsed={isCollapsed}>
           <div>
-            <Menu className="nothover abc">
+            <Menu>
               <MenuItem
-                className="nothover abc"
                 style={{ borderBottom: "1px solid #D9D9D9" }}
                 icon={
                   <GiHamburgerMenu
                     fontSize={23}
-                    onClick={() => {
-                      collapseSidebar();
-                      hideorshow();
-                    }}
+                    onClick={handleHamburgerClick}
                     color="#0C5398"
                   />
                 }
               >
-                {hideimg === true ? (
-                  <img src={img} alt="logo" style={{ width: "80%" }} />
-                ) : (
-                  ""
-                )}
+                {/* Display logo if showLogo is true */}
+                {showLogo && <img src={img} alt="logo" style={{ width: "80%" }} />}
               </MenuItem>
             </Menu>
 
             <Menu>
-              <MenuItem
-                className="nothover"
-                icon={<img style={{ width: "36px" }} src={img1} alt="dashboard" />}
-              >
+              <MenuItem icon={<img style={{ width: "36px" }} src={img1} alt="dashboard" />}>
                 <NavLink
                   to="/dashboard"
-                  className={location.pathname === "/dashboard" ? "nav active" : "nav"}
+                  className={({ isActive }) => (isActive ? "nav active" : "nav")}
                 >
                   Dashboard
                 </NavLink>
               </MenuItem>
 
-              <MenuItem
-                className="nothover"
-                icon={<img style={{ width: "36px" }} src={img4} alt="user" />}
-              >
+              <MenuItem icon={<img style={{ width: "36px" }} src={img4} alt="user" />}>
                 <NavLink
                   to="/userlist/0"
-                  className={location.pathname === "/adduser" || result === "/userlist" || result === "/edituser" ? "nav active" : "nav"}
+                  className={
+                    location.pathname === "/adduser" ||
+                    result === "/userlist" ||
+                    result === "/edituser"
+                      ? "nav active"
+                      : "nav"
+                  }
                 >
                   User
                 </NavLink>
               </MenuItem>
 
-              <MenuItem
-                className="nothover"
-                icon={<img style={{ width: "36px" }} src={img40} alt="cart" />}
-              >
+              <MenuItem icon={<img style={{ width: "36px" }} src={img40} alt="cart" />}>
                 <NavLink
                   to="/cartlist/0"
-                  className={location.pathname === "/" || result === "/cartlist" ? "nav active" : "nav"}
+                  className={result === "/cartlist" ? "nav active" : "nav"}
                 >
                   Cart
                 </NavLink>
               </MenuItem>
 
-              <MenuItem
-                className="nothover"
-                icon={<img style={{ width: "36px" }} src={img5} alt="category" />}
-              >
+              <MenuItem icon={<img style={{ width: "36px" }} src={img5} alt="category" />}>
                 <NavLink
                   to="/categorylist/0"
-                  className={location.pathname === "/addcategory" || result === "/categorylist" || result === "/editcategory" ? "nav active" : "nav"}
+                  className={
+                    location.pathname === "/addcategory" ||
+                    result === "/categorylist" ||
+                    result === "/editcategory"
+                      ? "nav active"
+                      : "nav"
+                  }
                 >
                   Category
                 </NavLink>
               </MenuItem>
 
-              <MenuItem
-                className="nothover"
-                icon={<img style={{ width: "36px" }} src={img43} alt="order" />}
-              >
+              <MenuItem icon={<img style={{ width: "36px" }} src={img43} alt="order" />}>
                 <NavLink
                   to="/orderlist/0"
-                  className={location.pathname === "/addorder" || result === "/orderlist" || result === "/editorder" ? "nav active" : "nav"}
+                  className={
+                    location.pathname === "/addorder" ||
+                    result === "/orderlist" ||
+                    result === "/editorder"
+                      ? "nav active"
+                      : "nav"
+                  }
                 >
                   Order
                 </NavLink>
               </MenuItem>
 
-              <MenuItem
-                className="nothover"
-                icon={<img style={{ width: "36px" }} src={img12} alt="product" />}
-              >
+              <MenuItem icon={<img style={{ width: "36px" }} src={img12} alt="product" />}>
                 <NavLink
                   to="/productlist/0"
-                  className={location.pathname === "/addproduct" || result === "/productlist" || result === "/editproduct" ? "nav active" : "nav"}
+                  className={
+                    location.pathname === "/addproduct" ||
+                    result === "/productlist" ||
+                    result === "/editproduct"
+                      ? "nav active"
+                      : "nav"
+                  }
                 >
                   Product
                 </NavLink>
               </MenuItem>
 
-              <MenuItem
-                className="nothover"
-                icon={<img style={{ width: "36px" }} src={img11} alt="banner" />}
-              >
+              <MenuItem icon={<img style={{ width: "36px" }} src={img11} alt="banner" />}>
                 <NavLink
                   to="/bannerlist/0"
-                  className={location.pathname === "/addbanner" || result === "/bannerlist" || result === "/editbanner" ? "nav active" : "nav"}
+                  className={
+                    location.pathname === "/addbanner" ||
+                    result === "/bannerlist" ||
+                    result === "/editbanner"
+                      ? "nav active"
+                      : "nav"
+                  }
                 >
                   Banner
                 </NavLink>
               </MenuItem>
 
-              <MenuItem
-                className="nothover"
-                icon={<img style={{ width: "36px" }} src={img8} alt="brand" />}
-              >
+              <MenuItem icon={<img style={{ width: "36px" }} src={img8} alt="brand" />}>
                 <NavLink
                   to="/brandlist/0"
-                  className={location.pathname === "/addbrand" || result === "/brandlist" || result === "/editbrand" ? "nav active" : "nav"}
+                  className={
+                    location.pathname === "/addbrand" ||
+                    result === "/brandlist" ||
+                    result === "/editbrand"
+                      ? "nav active"
+                      : "nav"
+                  }
                 >
                   Brand
                 </NavLink>
@@ -179,8 +214,8 @@ const Sidebarmenu = ({ children }) => {
                 <MenuItem>
                   <NavLink
                     to="/webinfo"
-                    className={location.pathname === "/webinfo" ? "nav active" : "nav"}
-                    style={{ paddingLeft: hideimg === true ? "72px" : "30px" }}
+                    className={({ isActive }) => (isActive ? "nav active" : "nav")}
+                    style={{ paddingLeft: isCollapsed ? "72px" : "30px" }}
                   >
                     Web Detail
                   </NavLink>
@@ -189,8 +224,13 @@ const Sidebarmenu = ({ children }) => {
                 <MenuItem>
                   <NavLink
                     to="/contactlist/0"
-                    className={location.pathname === "/contactlist" || result === "/contactlist" ? "nav active" : "nav"}
-                    style={{ paddingLeft: hideimg === true ? "72px" : "30px" }}
+                    className={
+                      location.pathname === "/contactlist" ||
+                      result === "/contactlist"
+                        ? "nav active"
+                        : "nav"
+                    }
+                    style={{ paddingLeft: isCollapsed ? "72px" : "30px" }}
                   >
                     Contact Us
                   </NavLink>
@@ -198,7 +238,6 @@ const Sidebarmenu = ({ children }) => {
               </SubMenu>
 
               <MenuItem
-                className="nothover"
                 onClick={logoutevt}
                 icon={<img style={{ width: "36px" }} src={img9} alt="logout" />}
               >
@@ -207,10 +246,10 @@ const Sidebarmenu = ({ children }) => {
             </Menu>
           </div>
         </Sidebar>
-        <div style={{ width: "100%" }}>
-          <Header />
+        {/* <div style={{ width: "100%" }}>
+        <Header />
           {children}
-        </div>
+        </div> */}
       </div>
     );
   }

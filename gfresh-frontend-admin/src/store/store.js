@@ -23,11 +23,20 @@ export const store = configureStore({
     [variantApi.reducerPath]: variantApi.reducer,
     [brandApi.reducerPath]: brandApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
-
   },
-
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(categoryApi.middleware).concat(userApi.middleware).concat(productApi.middleware).concat(bannerApi.middleware).concat(webinfoApi.middleware).concat(cartApi.middleware).concat(attributeApi.middleware).concat(variantApi.middleware).concat(brandApi.middleware).concat(orderApi.middleware),
+    getDefaultMiddleware().concat([
+      categoryApi.middleware,
+      userApi.middleware,
+      productApi.middleware,
+      bannerApi.middleware,
+      webinfoApi.middleware,
+      cartApi.middleware,
+      attributeApi.middleware,
+      variantApi.middleware,
+      brandApi.middleware,
+      orderApi.middleware,
+    ]),
 })
 
 setupListeners(store.dispatch)
