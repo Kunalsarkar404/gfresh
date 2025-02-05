@@ -6,7 +6,7 @@ import Loadercomp from "../../../components/Loadercomp";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsQuestionLg } from "react-icons/bs";
 import {
-  useDeleteCategoryMutation,
+  useDeleteproductMutation,
   useGetAllCategoriesQuery,
 } from "../../../store/api/categoryapi";
 import { useDeleteProductMutation, useGetAllProductQuery } from "../../../store/api/productapi";

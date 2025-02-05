@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap');
-* {
 
+* {
   box-sizing: border-box;
   list-style: none;
   text-decoration: none;
@@ -2215,6 +2215,7 @@ td {
 
 .btn:hover {
   border: 1px solid #2d79f3;
+  ;
 }
 
     

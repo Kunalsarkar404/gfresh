@@ -5,7 +5,7 @@ import Multiselect from "multiselect-react-dropdown";
 import JoditEditor from "jodit-react";
 import { Field, Form, Formik } from "formik";
 import img3 from "../../../assets/selectbanner.webp";
-import { Bannervalidationedit } from "../Validation/Bannervalidationedit";
+import { Bannervalidationedit, Categoryvalidationedit } from "../Validation/Bannervalidationedit";
 import { useGetSingleBannerQuery, usePatchBannerMutation } from "../../../store/api/bannerapi";
 const Editbannerform = ({ id }) => {
   const { data, isLoading } = useGetSingleBannerQuery(id);

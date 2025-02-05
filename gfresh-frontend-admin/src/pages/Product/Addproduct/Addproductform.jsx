@@ -32,7 +32,7 @@ const Addproductform = () => {
     try {
       const response = await postproduct(value);
       if (!response.error) {
-        if (response.data.status == "successfully") {
+        if (response.data.status === "successfully") {
           nvg("/productlist/1");
           window.location.reload();
         }
