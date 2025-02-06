@@ -22,7 +22,7 @@ const Contactlist = () => {
       <div className="dashboardcontent px-2">
         <div className="container-fuild px-2 ">
           <div className="row bg-white py-3 rounded-top">
-            {idno == 1 ? (
+            {idno === 1 ? (
               <div className="col-11 alert alert-success mt-3" role="alert">
                 <h5 style={{ padding: "0px", margin: "0px" }}>
                   Successfully Added
@@ -31,7 +31,7 @@ const Contactlist = () => {
             ) : (
               <div></div>
             )}
-            {idno == 2 ? (
+            {idno === 2 ? (
               <div
                 className="col-11 alert alert-success mt-3 ml-2"
                 role="alert"

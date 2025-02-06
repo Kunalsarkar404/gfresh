@@ -8,8 +8,8 @@ import {
 } from "react-pro-sidebar";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-// import img from "./assets/loginlogo.png";
-import img from "./assets/Ecomus.svg";
+import img from "./assets/gfresh-logo.png";
+// import img from "./assets/Ecomus.svg";
 import img1 from "./assets/dashboard.png";
 import img4 from "./assets/team.png";
 import img5 from "./assets/options.png";
@@ -22,7 +22,6 @@ import img40 from "./assets/trolley.png";
 import img43 from "./assets/completed-task.png";
 import { gettoken, removeToken, sohstore } from "./Localstorage/Store";
 import { useState } from "react";
-import axios from "axios";
 import Header from "./components/Header";
 
 const Sidebarmenu = ({ children }) => {
@@ -59,19 +58,21 @@ const Sidebarmenu = ({ children }) => {
           background:
             location.pathname === "/resetpassword" ? "#ffff" : "#F3F6FA",
         }}
-      >
+      ><div className="bg-gray-50 min-h-screen">{children}</div>
         {children}
       </div>
     );
   } else {
     return (
       <div style={{ display: "flex", width: "100%" }}>
-        <Sidebar className="sidebarcum" defaultCollapsed="close">
-          <div>
+        <Sidebar
+          className="bg-green-900 text-white min-h-screen transition-all"
+          defaultCollapsed="close"
+        >
+          <div className="flex flex-col">
             <Menu className="nothover abc">
               <MenuItem
-                className="nothover abc"
-                style={{ borderBottom: "1px solid #D9D9D9" }}
+                className="text-white text-2xl cursor-pointer"
                 icon={
                   <GiHamburgerMenu
                     children="logobtn"
@@ -84,19 +85,14 @@ const Sidebarmenu = ({ children }) => {
                   />
                 }
               >
-                {" "}
-                {hideimg == true ? (
-                  <img src={img} alt="qwerty" style={{ width: "80%" }} />
-                ) : (
-                  ""
-                )}
+                {hideimg == true && <img src={img} alt="qwerty" style={{ width: "80%" }} />}
               </MenuItem>
             </Menu>
             <Menu>
               <NavLink
                 to="/dashboard"
-                className={
-                  location.pathname === "/dashboard" ? "nav active" : "nav"
+                className={({ isActive }) =>
+                  isActive ? "bg-green-700 nav" : "nav"
                 }
               >
                 <MenuItem
@@ -142,27 +138,6 @@ const Sidebarmenu = ({ children }) => {
                   Cart
                 </MenuItem>
               </NavLink>
-
-              {/*
-              <NavLink
-                to="/attributelist/0"
-                className={
-                  location.pathname === "/addattribute" ||
-                  result === "/attributelist" ||
-                  result === "/editattribute"
-                    ? "nav active"
-                    : "nav"
-                }
-              >
-                <MenuItem
-                  className="nothover"
-                  icon={<img style={{width:"36px"}} src={img5} alt="qwdfgerct" />}
-                >
-                  {" "}
-                  Attributes 
-                </MenuItem>
-              </NavLink>
-*/}
               <NavLink
                 to="/categorylist/0"
                 className={
@@ -253,25 +228,6 @@ const Sidebarmenu = ({ children }) => {
                   Brand
                 </MenuItem>
               </NavLink>
-              <NavLink
-                to="/attributelist/0"
-                className={
-                  location.pathname === "/addattribute" ||
-                    result === "/attributelist" ||
-                    result === "/editattribute"
-                    ? "nav active"
-                    : "nav"
-                }
-              >
-                <MenuItem
-                  className="nothover"
-                  icon={<img style={{ width: "36px" }} src={img5} alt="attribute-icon" />}
-                >
-                  Attributes
-                </MenuItem>
-              </NavLink>
-
-
 
               <SubMenu
                 title="Submenu 1"

@@ -15,7 +15,7 @@ import {
 } from "../Localstorage/Store";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AiOutlineDown } from "react-icons/ai";
-import img2 from "../assets/Ecomus.svg";
+import img2 from "../assets/gfresh-logo.png";
 import { useContactlistlatestQuery } from "../store/api/webinfoapi";
 const Header = () => {
   const nvg = useNavigate();

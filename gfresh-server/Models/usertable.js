@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const moment = require("moment-timezone");
-// const indianTimestampPlugin = require("../middlewares/indianTimestampPlugin");
 const userSchema = mongoose.Schema(
   {
     first_name: {

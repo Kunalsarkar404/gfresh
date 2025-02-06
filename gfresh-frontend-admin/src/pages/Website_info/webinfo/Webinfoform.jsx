@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
 import {
   useGetWebinfoQuery,
@@ -20,7 +19,7 @@ const Webinfoform = () => {
       const response = await patchwebinfo({ data: value });
       console.log("statu",response)
       if (!response.error) {
-        if (response.data.status == "successfully update") {
+        if (response.data.status === "successfully update") {
           // nvg("/categorylist/2");
           setshowstatus(true);
           setTimeout(() => {
@@ -35,11 +34,11 @@ const Webinfoform = () => {
   };
   // Edit Webinfo api end here
 
-  return isLoading == true ? (
+  return isLoading === true ? (
     ""
   ) : (
     <div className="container-fuild pb-4 pt-3 px-2 bg-white">
-      {showstatus == true ? (
+      {showstatus === true ? (
               <div
                 className="col-12 alert alert-success mt-3 ml-2"
                 role="alert"
@@ -351,7 +350,7 @@ const Webinfoform = () => {
                         />
                         <img
                           src={
-                            values.logo == data.data[0].logo
+                            values.logo === data.data[0].logo
                               ? `http://localhost:8000/uploads/images/${data.data[0].logo}`
                               : URL.createObjectURL(values.logo)
                           }

@@ -23,7 +23,7 @@ export const webinfoApi = createApi({
     }),
     contactlistlatest: builder.query({
       query: () => ({
-        url:'contactus10',
+        url:'contactus',
         method:'GET'
       })
     }),

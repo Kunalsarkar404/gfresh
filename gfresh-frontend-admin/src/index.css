@@ -37,7 +37,7 @@ html{
   }
 }
 .printbtn {
-  background-color:#059fe2; /* Green background color */
+  background-color:#00695c; /* Green background color */
   color: white; /* White text color */
   padding: 10px 20px; /* Padding for the button */
   font-size: 16px; /* Font size */
@@ -1650,8 +1650,8 @@ body {
   --bs-pagination-focus-bg: #e9ecef;
   --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
   --bs-pagination-active-color: #fff;
-  --bs-pagination-active-bg: #0d6efd;
-  --bs-pagination-active-border-color: #0d6efd;
+  --bs-pagination-active-bg: #00695c;
+  --bs-pagination-active-border-color: #004d40;
   --bs-pagination-disabled-color: #6c757d;
   --bs-pagination-disabled-bg: #fff;
   --bs-pagination-disabled-border-color: #dee2e6;

@@ -3,77 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 
 const Addprofile = () => {
-
-
-
-
-
-//       useEffect(() => {
-        // const API_ENDPOINT = 'https://in.staging.decentro.tech/kyc/public_registry/validate';
-        
-        // const validateAadhaar = async () => {
-        //   const payload = {
-        //     "reference_id": "your_unique_reference_id_here",
-        //     "document_type": "PAN",
-        //     "id_number": "DTTPA8683J",
-        //     "consent": "Y",
-        //     "consent_purpose": "KYC verification"
-        //   };
-          
-        //   const headers = {
-        //     "client_id": "Visualcode_9_sop",
-        //     "client_secret": "8ba00274144745f29ea7e87296d062b7",
-        //     "module_secret": "f0444e036a684e648aa82bb81e93a08d"
-        //   };
-          
-        //   try {
-            // const response = await axios.post(API_ENDPOINT, payload, { headers });
-    //         axios(API_ENDPOINT, {
-    //   method: "POST",
-    //   mode: "no-cors",
-    //   data: JSON.stringify(payload),
-    //   headers: headers,
-    // }).then((res) => {
-    //   console.log(res)
-    // });
-
-
-    // const options = {
-    //     method: 'POST',
-    //     headers: {
-    //       accept: 'application/json',
-    //       client_id: 'Visualcode_9_sop',
-    //       client_secret: '8ba00274144745f29ea7e87296d062b7',
-    //       module_secret: 'f0444e036a684e648aa82bb81e93a08d',
-    //       'content-type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       reference_id: '0000-0000-0000-2025',
-    //       document_type: 'PAN',
-    //       id_number: 'DTTPA8683J',
-    //       consent: 'Y',
-    //       consent_purpose: 'For bank account purpose only and test'
-    //     })
-    //   };
-      
-    //   fetch('https://in.staging.decentro.tech/kyc/public_registry/validate', options)
-    //     .then(response => response.json())
-    //     .then(response => console.log(response))
-    //     .catch(err => console.error(err));
-
-            // console.log(response.data); // print response data to console
-    //       } catch (error) {
-    //         console.error(error);
-    //       }
-    //     };
-        
-    //     validateAadhaar();
-        
-    //   }, []);
-      
     return (
         <div style={{ width: '100%' }}>
-            {/* <Header /> */}
             <div className="dashboardcontent">
                 {/* <Breadcup name={'Profile'} /> */}
                 <div className="container-fuild px-2 desgin1">
